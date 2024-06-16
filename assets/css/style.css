@@ -52,7 +52,7 @@ body{
 }
 .home-section{
     background:url('https://res.cloudinary.com/dby6jcsqv/image/upload/v1705923276/home-banner_rtpsrd.webp') no-repeat center top;
-    background-size: contain;
+    background-size: cover;
     padding-top: 80px;
     position: relative;
     padding-bottom: 120px;
