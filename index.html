@@ -99,13 +99,13 @@
       <div class="container mt-5" >
           <div class="row justify-content-center main-content align-items-center">
               <div class="col-lg-4 col-md-4 image-section">
-              <img loading="lazy" src="https://res.cloudinary.com/dby6jcsqv/image/upload/v1718520328/Sanjay_singh_khtx48.webp" alt="profile" class="img-fluid home-img wow zoomInLeft">
+              <img loading="lazy" src="https://res.cloudinary.com/dby6jcsqv/image/upload/v1742105281/Sanjay_singh_khtx48_j4gfhk_c_pad_w_500_h_500_duu4tx.webp" alt="profile" class="img-fluid home-img wow zoomInLeft">
               </div>
               <div class="col-lg-6 col-md-7 home-right animated-text">
             <!-- name-of-the-author -->
                    <h4 class="heading wow zoomInRight">Sanjay Singh</h4>
                    <h5 >
-                      I'm a <span class="typed-text typing-demo"></span><span class="cursor">&nbsp;</span>
+                      <span class="typed-text typing-demo"></span><span class="cursor">&nbsp;</span>
 
                     </h5>
                     <p class="mt-4 animate__bounce">I'm a Mern Stack Developer over 1+ years of experience. Experienced with all <br> stages of the development cycle for dynamic web projects.</p>
@@ -633,47 +633,49 @@
 
   <div class="col-lg-6 col-md-6">
     <div class="contact-form">
-      <form action="" method="POST">
+      <form id="contactForm" method="POST">
         <div class="row">
-          <div class="col-lg-6">
-            <div class="form-group mb-3">
-              <input type="text" id="ContactFormName" name="name" class="form-control" placeholder="Name*">
-              <span class="error_msg" id="name_error"></span>
-          </div>
-
-          </div>
-          <div class="col-lg-6 ">
-            <div class="form-group">
-              <input type="email" id="ContactFormEmail" name="email" class="form-control" placeholder="Email*">
-              <span class="error_msg" id="email_error"></span>
-          </div>
-          </div>
+            <div class="col-lg-6">
+                <div class="form-group mb-3">
+                    <input type="text" id="ContactFormName" name="name" class="form-control" placeholder="Name*">
+                    <span class="error_msg" id="name_error"></span>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <input type="email" id="ContactFormEmail" name="email" class="form-control" placeholder="Email*">
+                    <span class="error_msg" id="email_error"></span>
+                </div>
+            </div>
         </div>
-<div class="row">
-<div class="col-lg-12 mt-4">
-  <div class="form-group">
-    <input type="text" id="ContactSubject" name="subject" class="form-control" placeholder="Subject*">
-    <span class="error_msg" id="subject_error"></span>
-</div>
-</div>
-</div>
-
-<div class="row">
-<div class="col-lg-12 mt-4 ">
-  <div class="form-group">
-    <textarea id="ContactFormMessage" name="message" class="form-control" rows="7" placeholder="Message*"></textarea>
-    <span class="error_msg" id="message_error"></span>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-lg-12">
-  <div class="download-btn">
-    <input type="submit" class="btn  contact-link text-white" name="submit" value="Send Message">
-   </div>
-</div>
-</div>
-      </form>
+    
+        <div class="row">
+            <div class="col-lg-12 mt-4">
+                <div class="form-group">
+                    <input type="text" id="ContactSubject" name="subject" class="form-control" placeholder="Subject*">
+                    <span class="error_msg" id="subject_error"></span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-lg-12 mt-4">
+                <div class="form-group">
+                    <textarea id="ContactFormMessage" name="message" class="form-control" rows="7" placeholder="Message*"></textarea>
+                    <span class="error_msg" id="message_error"></span>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="download-btn">
+                    <input type="submit" class="btn contact-link text-white" value="Send Message">
+                </div>
+            </div>
+        </div>
+    </form>
+    
     </div>
   </div>
 
@@ -816,6 +818,48 @@ function topFunction() {
        document.addEventListener("DOMContentLoaded", function () { // On DOM Load initiate the effect
          if (textArray.length) setTimeout(type, newTextDelay + 250);
        });
+     </script>
+
+     <script>
+      document.getElementById('contactForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevents the default form submission
+
+    // Get the form data
+    const formData = new FormData(this);
+
+    // Prepare the data to send in the request
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        subject: formData.get('subject'),
+        message: formData.get('message')
+    };
+
+    // Send the data to the API using fetch
+    fetch('http://localhost:3000/send', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', // Make sure to set the content type to JSON
+        },
+        body: JSON.stringify(data) // Convert the data object to a JSON string
+    })
+    .then(response => response.json()) // Assuming the server responds with JSON
+    .then(data => {
+      console.log(data);
+        if (data.isSuccess) {
+            alert('Message sent successfully!');
+            // Optionally, clear the form or reset it
+            document.getElementById('contactForm').reset();
+        } else {
+            alert('There was an error sending the message.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while sending the message.');
+    });
+});
+
      </script>
 </body>
 </html>
